@@ -47,15 +47,15 @@ def consultarTelefono(cliente): #METODO PARA CONSULTAR EL TELEFONO DE UN CLIENTE
                 #print("No se encontro el nuemro")
               
 
-def añadirClienteYTelefono(cliente,telefono): #METODO PARA CREAR EL UN CLIENTE CON TELEFONO
+def añadirClienteYTelefono(cliente,telefono): #METODO PARA CREAR UN CLIENTE CON TELEFONO
     with open(listado,"a") as Fichero:    #escribe al final del archivo
         Fichero.write(cliente+","+telefono+"\n")       #inserta el nombre y el telefono del cliente
         Fichero.close()
     
 
 def eliminarTelefono(cliente):  #METODO PARA ELIMINAR EL TELEFONO DE UN CLIENTE
-   with open(listado, "r") as file: #lee el archivo asi ej: ['Andres,112312311\n' , []...]
-    clienteYNum= file.readlines()
+   with open(listado, "r") as file: 
+    clienteYNum= file.readlines()   #lee el archivo asi ej: ['Andres,112312311\n' , []...]
     for i,value in enumerate(clienteYNum):
         if cliente in value:
             clienteYNum[i]=cliente+","+'\n'       #Reemplaza el array con solo el nombre del cliente
@@ -66,7 +66,7 @@ def eliminarTelefono(cliente):  #METODO PARA ELIMINAR EL TELEFONO DE UN CLIENTE
     file.writelines(clienteYNum)
     file.close() 
 
-def añadirTelefono(cliente,telefono):#METODO PARA AÑADIR UN TELEFONO A UN CLIENTE
+def añadirTelefono(cliente,telefono):#METODO PARA AÑADIR UN TELEFONO A UN CLIENTE EXISTENTE
     with open(listado,"r") as file:
      clienteYNum= file.readlines()
      for i,values in enumerate(clienteYNum):
@@ -93,7 +93,7 @@ def pedirClientePorConsola():   #Metodo para consultar por consola al cliente, u
                 break
     return cliente
 
-def pedirNumeroPorConsola(): #Metodo para Añadir numero de telefono
+def pedirNumeroPorConsola(): #Metodo para Añadir número de telefono
     while True:
         try:
             numero=int(input("Ingrese un nuevo telefono para el cliente: "))
@@ -121,10 +121,11 @@ while True:
             break
 
 
-if eleccion == 1:
+if eleccion == 1:  #1.Crear un fichero(Recomendado)
     crearFicheroEcho()
     print("Se ha creado el fichero con algunos datos predeterminados, puede verlos en \"listado.txt\" \n")
-elif eleccion == 2:
+
+elif eleccion == 2:     #2.Consultar el telefono de un cliente
     nombreCliente=pedirClientePorConsola()
     resultado=consultarTelefono(nombreCliente)
     if resultado == "":
@@ -132,7 +133,8 @@ elif eleccion == 2:
     else:
         print(f"El teléfono del cliente \"{nombreCliente}\" es: {resultado}") #para Python 3.6 o superiores
     #print("El teléfono del cliente ",nombreCliente,"es:",resultado)
-elif eleccion == 3:
+
+elif eleccion == 3: #3.Añadir un cliente con su telefono
     while True:
         try:
             nombreCliente=str(input("Ingrese el nombre del nuevo cliente:\n")).capitalize()
@@ -143,11 +145,13 @@ elif eleccion == 3:
     numeroCliente=pedirNumeroPorConsola()
     añadirClienteYTelefono(nombreCliente,str(numeroCliente))
     print("El cliente",nombreCliente, "con su número",numeroCliente,"fue añadido al archivo \"fichero.txt\"")
-elif eleccion == 4:
+
+elif eleccion == 4: #4.Eliminar telefono de un cliente
     nombreCliente=pedirClientePorConsola()
     eliminarTelefono(nombreCliente)
     print("El número del cliente",nombreCliente, "a sido eliminado" )
-else:
+
+else:   #Eleccion 5.  #5.Añadir el telefono de un cliente
     nombreCliente=pedirClientePorConsola()
     numeroCliente=pedirNumeroPorConsola()
     añadirTelefono(nombreCliente,numeroCliente)
